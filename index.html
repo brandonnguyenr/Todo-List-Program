@@ -3,37 +3,71 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta  name="viewport" content="width=device, initial-scale=1.0">
-    <title>To-Do-Calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do</title>
     <style>
         body {
             margin: 0;
             font-family: 'Times New Roman', Times, serif;
-            background-color: #f4f1de;
+            background-color: white;
             position: relative;
             overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .centered-rectangle {
+        .background-image {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            width: 600px; 
-            height: 500px; 
-            border-radius: 10px;
-            padding: 20px;
-            z-index: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://people.com/thmb/sHGUuDmqesw1pqEfjF6mc_9KPjw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(959x0:961x2)/zoom-12-ed9418b0fcd7455fb06479e563587a14.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
         }
+
+        .login-section {
+            background-color: rgba(255, 255, 255, .8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            text-align: center;
+        }
+
+        .login-form-field::placeholder {
+        color: #3a3a3a;
+        }
+
+        .login-form-field {
+        border: none;
+        border-bottom: 1px solid #3a3a3a;
+        margin-bottom: 10px;
+        border-radius: 3px;
+        outline: none;
+        padding: 0px 0px 5px 5px;
+        background-color: rgba(255, 255, 255, 0.0);
+        }
+
     </style>
 </head>
 
 <body>
-    <h1> Welcome to Your To-Do Calendar!</h1>
-    <div class="login-header">
-        <div class="centered-rectangle">
-            <p>LOGIN</p>
-        </div>
+    <div class="background-image"></div>
+    <div class="login-section">
+        <h2 id="login-header"></h2>
+        <form id="login-form">
+            <input type="username" name="username" id="username-field" class="login-form-field" placeholder="username">
+            <br>
+            <input type="password" name="password" id="password-field" class="login-form-field" placeholder="password">
+            <br>
+            <input type="submit" value="submit">
+          </form>
     </div>
 </body>
+
+</html>
