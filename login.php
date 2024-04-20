@@ -52,23 +52,47 @@
             padding: 0px 0px 5px 5px;
             background-color: rgba(255, 255, 255, 0.0);
         }
-
     </style>
 </head>
 
 <body>
     <div class="background-image"></div>
     <div class="login-section">
+        <?php
+        session_start();
+        include("php/config.php");
+        if (isset($_POST['submit'])) {
+            $username = mysqli_real_escape_string($con, $_POST["username"]);
+            $password = mysqli_real_escape_string($con, $_POST["password"]);
+
+            $result = mysqli_query($con, "SELECT * FROM users WHERE username='$username' AND password='$password' ") or die("ERROR");
+            $row = mysqli_fetch_assoc($result);
+
+            if (is_array($row) && !empty($row)) {
+                $_SESSION['id'] = $row['user_id'];
+                $_SESSION['username'] = $row['username'];
+            } else {
+                $login_error = "Invalid username or password. Please try again."; 
+            }
+        }
+        ?>
         <h2 id="login-header"></h2>
         <form id="login-form" method="POST">
-            <input type="username" name="username" id="username-field" class="login-form-field" placeholder="username">
+            <input type="text" name="username" id="username-field" class="login-form-field" placeholder="username">
             <br>
             <input type="password" name="password" id="password-field" class="login-form-field" placeholder="password">
             <br>
-            <input type="submit" value="submit">
+            <input type="submit" name="submit" value="submit">
         </form>
+
+        <?php
+        if (!empty($login_error)) {
+            echo "<p style='color: red;'>$login_error</p>"; 
+        }
+        ?>
     </div>
 </body>
 
 </html>
+
 
