@@ -40,17 +40,17 @@
         }
 
         .login-form-field::placeholder {
-        color: #3a3a3a;
+            color: #3a3a3a;
         }
 
         .login-form-field {
-        border: none;
-        border-bottom: 1px solid #3a3a3a;
-        margin-bottom: 10px;
-        border-radius: 3px;
-        outline: none;
-        padding: 0px 0px 5px 5px;
-        background-color: rgba(255, 255, 255, 0.0);
+            border: none;
+            border-bottom: 1px solid #3a3a3a;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            outline: none;
+            padding: 0px 0px 5px 5px;
+            background-color: rgba(255, 255, 255, 0.0);
         }
 
     </style>
@@ -60,14 +60,15 @@
     <div class="background-image"></div>
     <div class="login-section">
         <h2 id="login-header"></h2>
-        <form id="login-form">
+        <form id="login-form" method="POST">
             <input type="username" name="username" id="username-field" class="login-form-field" placeholder="username">
             <br>
             <input type="password" name="password" id="password-field" class="login-form-field" placeholder="password">
             <br>
             <input type="submit" value="submit">
-          </form>
+        </form>
     </div>
 </body>
 
 </html>
+
