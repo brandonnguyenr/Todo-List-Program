@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: 'Impact', fantasy; 
+    font-size: 20px; 
+    background-color: white;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://people.com/thmb/sHGUuDmqesw1pqEfjF6mc_9KPjw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(959x0:961x2)/zoom-12-ed9418b0fcd7455fb06479e563587a14.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.login-section {
+    background-color: rgba(255, 255, 255, .8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    text-align: center;
+    width: 200px; 
+    height: 325px; 
+    margin: auto;
+    position: absolute; 
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.login-form-field::placeholder {
+    color: #3a3a3a;
+}
+
+.login-form-field {
+    border: none;
+    border-bottom: 1px solid #3a3a3a;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    outline: none;
+    padding: 0px 0px 5px 5px;
+    background-color: rgba(255, 255, 255, 0.0);
+}
+
+#button {
+    background-color: rgba(202, 20, 20, 0.877); 
+    color: white; 
+    padding: 10px 20px; 
+    font-size: 18px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+#button {
+    background-color: rgba(202, 20, 20, 0.877); 
+    color: white; 
+    padding: 10px 20px; 
+    font-size: 18px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+#button:hover {
+    background-color: rgba(139, 0, 0, 0.863); 
+}
+
+.black-bar {
+    background-color: rgba(0, 0, 0, 0.301);
+    height: 2px; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+
+#button-register {
+    background-color: rgba(14, 119, 180, 0.795); 
+    color: white; 
+    padding: 10px 20px; 
+    font-size: 18px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+#button-register:hover {
+    background-color: rgba(5, 55, 75, 0.685); 
+}
