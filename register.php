@@ -10,7 +10,8 @@
 
 <body>
     <div class="background-image"></div>
-    <div class="registration-section">
+    <div class="login-section">
+
         <?php
         include("php/config.php");
 
@@ -24,18 +25,16 @@
             $confirm_password = sanitize_input($_POST['confirm_password']);
 
             if($password !== $confirm_password) {
-                echo "<div class='message' style='color:red; font-size: 13px; font-family: Arial, sans-serif;'><p>Passwords do not match!</p></div><br>";
-                echo "<a href='javascript:self.history.back()'><button type='button'>Restart</button></a>";                
+                echo "<div class='message' style='color:red; font-size: 13px; font-family: Arial, sans-serif;'><p>Passwords do not match!</p></div><br>";              
             } else {
                 $verify_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
                 if(mysqli_num_rows($verify_query) != 0) {
                     echo "<div class='message' style='color:red; font-size: 13px; font-family: Arial, sans-serif;'><p>Username already exists! Please try a different username.</p></div><br>";
-                    echo "<a href='javascript:self.history.back()'><button type='button'>Restart</button></a>";
                 } else {
                     $hashed_password = password_hash($password, PASSWORD_DEFAULT); 
                     mysqli_query($con, "INSERT INTO users(username, password) VALUES('$username', '$hashed_password')");
-                    echo "<div class='message' style='color:green; font-size: 13px; font-family: Arial, sans-serif;'><p>Registration Successful!</p></div><br>";
-                    echo "<a href='index.php'><button type='button'>Login Now</button></a>";                    
+                    echo "<div class='message' style='color:green; font-size: 13px; font-family: Arial, sans-serif;'><p>Registration Successful!</p></div><br>"; 
+                    echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 1000);</script>";         
                 }
             }
         }
