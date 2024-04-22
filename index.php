@@ -1,3 +1,32 @@
+<?php
+session_start();
+include("php/config.php");
+
+if (isset($_POST['submit'])) {
+    $username = mysqli_real_escape_string($con, $_POST["username"]);
+    $password = $_POST["password"];
+
+    $stmt = $con->prepare("SELECT * FROM users WHERE username=?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['id'] = $row['user_id'];
+            $_SESSION['username'] = $row['username'];
+            header("Location: index.php");
+            exit();
+        } else {
+            $login_error = "Invalid username or password. Please try again.";
+        }
+    } else {
+        $login_error = "Invalid username or password. Please try again.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,26 +40,6 @@
 <body>
     <div class="background-image"></div>
     <div class="login-section">
-
-        <?php
-        session_start();
-        include("php/config.php");
-        if (isset($_POST['submit'])) {
-            $username = mysqli_real_escape_string($con, $_POST["username"]);
-            $password = mysqli_real_escape_string($con, $_POST["password"]);
-
-            $result = mysqli_query($con, "SELECT * FROM users WHERE username='$username' AND password='$password' ") or die("ERROR");
-            $row = mysqli_fetch_assoc($result);
-
-            if (is_array($row) && !empty($row)) {
-                $_SESSION['id'] = $row['user_id'];
-                $_SESSION['username'] = $row['username'];
-            } else {
-                $login_error = "Invalid username or password. Please try again.";  
-            }
-        }
-        ?>
-
         <h2 id="login-header"></h2>
         <form id="login-form" method="POST">
             <p>TASK MANAGER</p>
@@ -49,12 +58,9 @@
         
         <div class="black-bar"></div>
         <p>NEW USER</p>
-        <button type="submit" name="submit" id="button">Register</button>
-    
+        <a href="register.php"><button type="button" id="button">Register</button></a>
     </div>
 </body>
 
 </html>
-
-
 

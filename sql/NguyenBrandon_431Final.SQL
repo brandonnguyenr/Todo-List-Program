@@ -11,9 +11,5 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL
 );
 
--- Insert sample data 
-INSERT INTO users (username, password) VALUES
-('brandon', '123');
-
 
 
