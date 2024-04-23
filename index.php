@@ -47,7 +47,8 @@ if (isset($_POST['submit'])) {
             <br>
             <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
             <br>
-            <button type="submit" name="submit" id="button-register">Login</button>
+            <!-- <button type="submit" name="submit" id="button-register">Login</button> -->
+            <button class="btn btn-blue" type="submit" name="submit">Login</button>
         </form>
 
         <?php
@@ -58,7 +59,8 @@ if (isset($_POST['submit'])) {
         
         <div class="black-bar"></div>
         <p>NEW USER</p>
-        <a href="register.php"><button type="button" id="button">Register</button></a>
+        <!-- <a href="register.php"><button type="button" id="button">Register</button></a> -->
+        <a href="register.php"><button class="btn btn-red" type="button">Register</button></a>
     </div>
 </body>
 

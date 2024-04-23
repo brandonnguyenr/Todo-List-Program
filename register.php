@@ -47,7 +47,8 @@
             <br>
             <input type="password" name="confirm_password" id="confirm-password-field" class="login-form-field" placeholder="Confirm Password" required>
             <br>
-            <button type="submit" name="submit" id="button">Register</button>
+            <!-- <button type="submit" name="submit" id="button">Register</button> -->
+            <button class="btn btn-red" type="submit" name="submit">Register</button>
         </form>
     </div>
 </body>
