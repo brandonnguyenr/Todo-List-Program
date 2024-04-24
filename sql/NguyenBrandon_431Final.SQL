@@ -11,5 +11,25 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL
 );
 
+-- Create a table for storing lists
+CREATE TABLE IF NOT EXISTS lists (
+    list_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Create a table for storing list items
+CREATE TABLE IF NOT EXISTS list_items (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    list_id INT NOT NULL,
+    text VARCHAR(255) NOT NULL,
+    checked BOOLEAN NOT NULL,
+    created DATETIME NOT NULL,
+    FOREIGN KEY (list_id) REFERENCES lists(list_id)
+);
+
+
 
 

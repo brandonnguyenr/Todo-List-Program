@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* CSS for splitting the page */
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .left-panel,
+        .right-panel {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* CSS for styling the calendar */
+        .calendar {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .calendar h2 {
+            text-align: center;
+        }
+
+        .calendar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .calendar ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Panel for Adding Tasks -->
+        <div class="left-panel">
+            <h2>Add Task</h2>
+            <form id="task-form">
+                <input type="text" id="task-input" placeholder="Enter task">
+                <button type="submit">Add Task</button>
+            </form>
+            <ul id="task-list"></ul>
+        </div>
+
+        <!-- Right Panel for Calendar -->
+        <div class="right-panel">
+            <div class="calendar">
+                <h2>Task Calendar</h2>
+                <ul id="calendar-tasks">
+                    <!-- Calendar tasks will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for handling task addition and calendar display -->
+    <script>
+        document.getElementById('task-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var taskInput = document.getElementById('task-input').value;
+            if (taskInput.trim() !== '') {
+                var taskList = document.getElementById('task-list');
+                var li = document.createElement('li');
+                li.textContent = taskInput;
+                taskList.appendChild(li);
+                document.getElementById('task-input').value = '';
+                updateCalendar(taskInput);
+            }
+        });
+
+        function updateCalendar(task) {
+            var currentDate = new Date();
+            var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var currentDay = daysOfWeek[currentDate.getDay()];
+            var calendarTasks = document.getElementById('calendar-tasks');
+            var li = document.createElement('li');
+            li.textContent = task + ' - ' + currentDay;
+            calendarTasks.appendChild(li);
+        }
+    </script>
+</body>
+
+</html>
