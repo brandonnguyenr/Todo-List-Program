@@ -7,7 +7,6 @@
     <title>Task Manager</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        /* CSS for splitting the page */
         .container {
             display: flex;
             flex-direction: row;
@@ -20,7 +19,6 @@
             box-sizing: border-box;
         }
 
-        /* CSS for styling the calendar */
         .calendar {
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -39,12 +37,16 @@
         .calendar ul li {
             margin-bottom: 10px;
         }
+
+        .day {
+            width: calc(100% / 7); 
+            float: left;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <!-- Left Panel for Adding Tasks -->
         <div class="left-panel">
             <h2>Add Task</h2>
             <form id="task-form">
@@ -54,18 +56,43 @@
             <ul id="task-list"></ul>
         </div>
 
-        <!-- Right Panel for Calendar -->
         <div class="right-panel">
             <div class="calendar">
                 <h2>Task Calendar</h2>
-                <ul id="calendar-tasks">
-                    <!-- Calendar tasks will be dynamically added here -->
-                </ul>
+                <div class="days-container">
+                    <div class="day" id="day0">
+                        <h3>Sunday</h3>
+                        <ul class="day-tasks" id="day0-tasks"></ul>
+                    </div>
+                    <div class="day" id="day1">
+                        <h3>Monday</h3>
+                        <ul class="day-tasks" id="day1-tasks"></ul>
+                    </div>
+                    <div class="day" id="day2">
+                        <h3>Tuesday</h3>
+                        <ul class="day-tasks" id="day2-tasks"></ul>
+                    </div>
+                    <div class="day" id="day3">
+                        <h3>Wednesday</h3>
+                        <ul class="day-tasks" id="day3-tasks"></ul>
+                    </div>
+                    <div class="day" id="day4">
+                        <h3>Thursday</h3>
+                        <ul class="day-tasks" id="day4-tasks"></ul>
+                    </div>
+                    <div class="day" id="day5">
+                        <h3>Friday</h3>
+                        <ul class="day-tasks" id="day5-tasks"></ul>
+                    </div>
+                    <div class="day" id="day6">
+                        <h3>Saturday</h3>
+                        <ul class="day-tasks" id="day6-tasks"></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript for handling task addition and calendar display -->
     <script>
         document.getElementById('task-form').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -83,13 +110,15 @@
         function updateCalendar(task) {
             var currentDate = new Date();
             var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            var currentDay = daysOfWeek[currentDate.getDay()];
-            var calendarTasks = document.getElementById('calendar-tasks');
+            var currentDayIndex = currentDate.getDay(); 
+            var currentDay = daysOfWeek[currentDayIndex]; 
+            var calendarTasks = document.getElementById('day' + currentDayIndex + '-tasks');
             var li = document.createElement('li');
-            li.textContent = task + ' - ' + currentDay;
+            li.textContent = task;
             calendarTasks.appendChild(li);
         }
     </script>
 </body>
 
 </html>
+
