@@ -4,6 +4,19 @@ CREATE DATABASE IF NOT EXISTS 431Final_NguyenBrandon;
 -- Switch to the newly created database
 USE 431Final_NguyenBrandon;
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE IF NOT EXISTS `getUser` (IN `_username` VARCHAR(50))   SELECT * FROM users WHERE username=_username$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE IF NOT EXISTS `postUser` (IN `_username` VARCHAR(50), IN `_password` VARCHAR(255))  MODIFIES SQL DATA BEGIN
+INSERT INTO users (username, password) VALUES (_username, _password);
+CALL `getUser`(_username);
+END$$
+
+DELIMITER ;
+
 -- Create a table for storing usernames and passwords
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,

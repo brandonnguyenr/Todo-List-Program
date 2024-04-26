@@ -59,7 +59,8 @@ function PUT(Handler $handler)
 
 function getUser(PDO $pdo, string $username, string $password)
 {
-    $query = "SELECT * FROM users WHERE username=?;";
+    // $query = "SELECT * FROM users WHERE username=?;";
+    $query = "CALL `getUser`(?);";
 
     $statement = $pdo->prepare($query);
 
@@ -92,7 +93,8 @@ function postUser(PDO $pdo, string $username, string $password)
 
         $password = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO users (username, password) VALUES (:username, :password);";
+        // $query = "INSERT INTO users (username, password) VALUES (:username, :password);";
+        $query = "CALL `postUser`(:username, :password);";
         $statement = $pdo->prepare($query);
 
         $parameters = [":username" => $username, ":password" => $password];
@@ -100,7 +102,7 @@ function postUser(PDO $pdo, string $username, string $password)
         $statement->execute($parameters);
 
         $results = $statement->fetchAll();
-        return $results;
+        return $results[0]['user_id'];
 
     }
 }
