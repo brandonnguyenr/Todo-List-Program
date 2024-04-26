@@ -1,8 +1,8 @@
 <?php
 
-require("helpers/client_request.php");
-require("helpers/data_source.php");
-require("helpers/server_response.php");
+require("client_request.php");
+require("data_source.php");
+require("server_response.php");
 
 class Handler
 {

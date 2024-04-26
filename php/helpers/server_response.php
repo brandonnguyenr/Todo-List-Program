@@ -32,6 +32,12 @@ class ServerResponse
         exit($data);
     }
 
+    // Passes data to the global $_Session variable does not exit!
+    public function session($data)
+    {
+        $_SESSION["data"] = $data;
+    }
+
     // Executes the PHP function whose name matches the HTTP method from the request
     public function process($dependancy)
     {
