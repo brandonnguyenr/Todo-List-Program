@@ -17,15 +17,6 @@ $handler = new Handler();
 // Process the request (Will execute one of the GET/PUT/POST/DELETE functions below)
 $handler->process();
 
-
-function handleResponse(Handler $handler, $data)
-{
-    if (isset($_SESSION)) {
-        $handler->response->session($data);
-    } else {
-        $handler->response->json($data);
-    }
-}
 // This function executes if you create a fetch() request to api/user.php and use "GET" as the method
 // function GET(Handler $handler)
 // {
@@ -42,21 +33,22 @@ function POST(Handler $handler)
 {
     $pdo = $handler->db->PDO();
 
+    // Grab expected parameters from POST request
     $user_id = null;
     $create = $handler->request->post['create'] ?? false;
     $username = $handler->request->post['username'] ?? '';
     $password = $handler->request->post['password'] ?? '';
 
     try {
-        if ($create != false) {
+        if ($create) {
             $user_id = postUser($pdo, $username, $password);
         } else {
             $user_id = getUser($pdo, $username, $password);
         }
 
-        handleResponse($handler, ['user_id' => $user_id]);
+        $handler->response->handleResponse($handler, ['user_id' => $user_id]);
     } catch (UserException $error) {
-        handleResponse($handler, ['error' => $error->getMessage()]);
+        $handler->response->handleResponse($handler, ['error' => $error->getMessage()]);
     }
 }
 

@@ -36,6 +36,18 @@ class ServerResponse
     public function session($data)
     {
         $_SESSION["data"] = $data;
+        // TODO: check if adding this works with the user api 
+        exit;
+    }
+
+    // Determines where to place the data to return to the user.
+    public function handleResponse($data)
+    {
+        if (isset($_SESSION)) {
+            $this->session($data);
+        } else {
+            $this->json($data);
+        }
     }
 
     // Executes the PHP function whose name matches the HTTP method from the request

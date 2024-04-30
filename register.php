@@ -24,8 +24,6 @@ if (isset($_POST['submit'])) {
         if (isset($data['error'])) {
             $login_error = $data['error'] . '. Please Use A different Username.';
         } else {
-            $_SESSION['user_id'] = $data['user_id'];
-
             $success_msg = 'Registration Successful! Redirecting....';
         }
     }
