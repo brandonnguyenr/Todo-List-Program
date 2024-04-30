@@ -45,10 +45,10 @@ function POST(Handler $handler)
         } else {
             $user_id = getUser($pdo, $username, $password);
         }
+        $handler->response->handleResponse(['user_id' => $user_id]);
 
-        $handler->response->handleResponse($handler, ['user_id' => $user_id]);
     } catch (UserException $error) {
-        $handler->response->handleResponse($handler, ['error' => $error->getMessage()]);
+        $handler->response->handleResponse(['error' => $error->getMessage()]);
     }
 }
 

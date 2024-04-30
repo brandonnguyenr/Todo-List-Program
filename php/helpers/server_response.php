@@ -36,8 +36,6 @@ class ServerResponse
     public function session($data)
     {
         $_SESSION["data"] = $data;
-        // TODO: check if adding this works with the user api 
-        exit;
     }
 
     // Determines where to place the data to return to the user.
