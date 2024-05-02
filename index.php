@@ -10,7 +10,7 @@ if (isset($_POST['submit'])) {
     if (isset($data['error'])) {
         $login_error = $data['error'] . '. Please Try Again.';
     } else {
-        $_SESSION['user_id'] = $data['user_id'];
+        $_SESSION['ID'] = $data['user_id'];
         // TODO: maybe use javascript to use window.replace('todo.html') instead 
         // so users can't use the back button to go back to login 
         header('Location: sql/todopage.html');
