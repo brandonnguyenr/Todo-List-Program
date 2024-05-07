@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['ID'] = $data['user_id'];
         // TODO: maybe use javascript to use window.replace('todo.html') instead 
         // so users can't use the back button to go back to login 
-        header('Location: sql/todopage.html');
+        header('Location: todopage.html');
         exit();
     }
 }
@@ -40,9 +40,7 @@ if (isset($_POST['submit'])) {
             <br>
             <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
             <br>
-            <form action="todopage.html" method="get">
-                <button type="submit" id="button-register">Login</button>
-            </form>
+                <button type="submit" name = "submit" id="button-register">Login</button>
         </form>
 
         <?php
