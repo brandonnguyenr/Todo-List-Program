@@ -47,7 +47,9 @@ if (isset($_POST['submit'])) {
             <br>
             <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
             <br>
-            <button type="submit" name="submit" id="button-register">Login</button>
+            <form action="todopage.html" method="get">
+                <button type="submit" id="button-register">Login</button>
+            </form>
         </form>
 
         <?php
