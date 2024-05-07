@@ -1,3 +1,35 @@
+<?php
+// include("php/config.php");
+session_start();
+$login_error = '';
+$success_msg = '';
+
+function sanitize_input($data)
+{
+    return htmlspecialchars(trim($data));
+}
+
+if (isset($_POST['submit'])) {
+    $username = sanitize_input($_POST['username']);
+    $password = sanitize_input($_POST['password']);
+    $confirm_password = sanitize_input($_POST['confirm_password']);
+
+    if ($password !== $confirm_password) {
+        $login_error = 'Passwords do not match!';
+    } else {
+        $_POST['create'] = true;
+        include('php/user.php');
+
+        $data = $_SESSION['data'];
+        if (isset($data['error'])) {
+            $login_error = $data['error'] . '. Please Use A different Username.';
+        } else {
+            $success_msg = 'Registration Successful! Redirecting....';
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,32 +43,15 @@
 <body>
     <div class="background-image"></div>
     <div class="login-section">
-
         <?php
-        include("php/config.php");
-
-        function sanitize_input($data) {
-            return htmlspecialchars(trim($data));
+        if (!empty($login_error)) {
+            echo "<div class='message' style='color:red; font-size: 13px; font-family: Arial, sans-serif;'><p>$login_error</p></div><br>";
         }
 
-        if(isset($_POST['submit'])) {
-            $username = sanitize_input($_POST['username']);
-            $password = sanitize_input($_POST['password']);
-            $confirm_password = sanitize_input($_POST['confirm_password']);
+        if (!empty($success_msg)) {
+            echo "<div class='message' style='color:green; font-size: 13px; font-family: Arial, sans-serif;'><p>$success_msg</p></div><br>";
 
-            if($password !== $confirm_password) {
-                echo "<div class='message' style='color:red; font-size: 13px; font-family: Arial, sans-serif;'><p>Passwords do not match!</p></div><br>";              
-            } else {
-                $verify_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
-                if(mysqli_num_rows($verify_query) != 0) {
-                    echo "<div class='message' style='color:red; font-size: 13px; font-family: Arial, sans-serif;'><p>Username already exists! Please try a different username.</p></div><br>";
-                } else {
-                    $hashed_password = password_hash($password, PASSWORD_DEFAULT); 
-                    mysqli_query($con, "INSERT INTO users(username, password) VALUES('$username', '$hashed_password')");
-                    echo "<div class='message' style='color:green; font-size: 13px; font-family: Arial, sans-serif;'><p>Registration Successful!</p></div><br>"; 
-                    echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 1000);</script>";         
-                }
-            }
+            echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 1000);</script>";
         }
         ?>
         <form method="POST" action="">
@@ -47,7 +62,7 @@
             <br>
             <input type="password" name="confirm_password" id="confirm-password-field" class="login-form-field" placeholder="Confirm Password" required>
             <br>
-            <button type="submit" name="submit" id="button">Register</button>
+            <button class="btn btn-red" type="submit" name="submit">Register</button>
         </form>
     </div>
 </body>
