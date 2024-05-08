@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
             <br>
             <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
             <br>
-                <button type="submit" name = "submit" id="button-register">Login</button>
+                <button type="submit" name = "submit" class="btn btn-blue" id="button-register">Login</button>
         </form>
 
         <?php

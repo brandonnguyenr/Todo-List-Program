@@ -90,3 +90,48 @@ body {
     --bg-color: rgba(202, 20, 20, 0.877);
     --bg-color-hover: rgba(139, 0, 0, 0.863);
 }
+
+.white-box {
+    background-color: rgb(255, 255, 255);
+    width: 1500px;
+    max-width: 1500px; 
+    height: 850px;
+    max-height: 1000px;
+    margin: 0 auto; 
+    padding: 20px; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1; 
+}
+
+.center-blue-box {
+    background-color: rgba(26, 49, 150, 0.952);
+    width: 500px;
+    max-width: 1500px; 
+    height: 850px;
+    max-height: 1000px;
+    margin: 0 auto; 
+    padding: 20px; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 2; 
+}
+h1 {
+    font-size: 1em;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    margin: 0 auto; 
+}
+
+#date {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
