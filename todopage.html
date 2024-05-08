@@ -8,23 +8,27 @@
 </head>
 <body>
     <div class="background-image"></div>
+
     <div class="white-box">
         <h1>Welcome!</h1>
     </div>
+
     <div class="center-blue-box">
         <form id="todo-form">
             <h2>My Day</h2>
             <p id="date"></p>
-            <input type="text" class="form-control" id="todoUserInput" placeholder="Todo">
-            <button type="submit">Create</button>
-        </form>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add Task">
+                <button type="submit" name = "submit" class="btn btn-todo" id="button-todo">Add</button>
+            </div>
+        </form>  
+        
+        <div id="tasks-container"></div>
     </div>
 
-    <script>
-        const currentDate = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('date').textContent = currentDate.toLocaleDateString('en-US', options);
-    </script>
+ 
+
+    <script src="js/script.js"></script>
 
 </body>
 </html>
