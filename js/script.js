@@ -51,21 +51,41 @@ function fetchTasks() {
                 taskItem.textContent = item.name; 
                 taskContainer.appendChild(taskItem); 
 
+                // Create the pencil icon button
+                const addButton = document.createElement('button');
+                addButton.classList.add('add-text-button'); // Add a class for styling
+                addButton.type = 'button'; 
+                const pencilIcon = document.createElement('img');
+                pencilIcon.src = 'images/pencil-icon-vector-21894351.jpg'; // Provide the path to your pencil icon image
+                pencilIcon.alt = 'Add Text';
+                addButton.appendChild(pencilIcon);
+                addButton.addEventListener('click', function(event) {
+                    if (event.target === pencilIcon) {
+                        const taskId = taskContainer.dataset.taskId;
+                        const newText = prompt('Enter your text:');
+            
+                        if (!newText) {
+                            return;
+                        }
+                        saveText(taskId, newText);
+                    }
+                });
+                taskContainer.appendChild(addButton);
+
+                // Create the delete button
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-button');
                 deleteButton.type = 'button'; 
-
                 const trashCanIcon = document.createElement('img');
                 trashCanIcon.src = 'images/trash-can-outline-icon-bin-vector-43707178.jpg'; 
                 trashCanIcon.alt = 'Delete';
                 deleteButton.appendChild(trashCanIcon);
-
                 deleteButton.addEventListener('click', function() {
                     const taskId = taskContainer.dataset.taskId;
                     deleteTask(taskId);
                 });
-
                 taskContainer.appendChild(deleteButton);
+
                 todoList.appendChild(taskContainer); 
             });
         })
@@ -82,6 +102,12 @@ document.getElementById('tasks-container').addEventListener('click', function(ev
 });
 
 function deleteTask(taskId) {
+    const confirmDelete = confirm("Are you sure you want to delete this task?");
+
+    if (!confirmDelete) {
+        return;
+    }
+
     fetch('php/list.php?list_id=' + taskId, {
         method: 'DELETE'
     })
@@ -98,3 +124,33 @@ function deleteTask(taskId) {
     })
     .catch(error => console.error('Error deleting task:', error));
 } 
+
+function saveText(taskId, newText) {
+    console.log("Saving text for taskId:", taskId);
+    console.log("New text:", newText);
+
+    const data = { text: newText, list_id: taskId }; // Send text and list_id for adding a new item
+    fetch('php/list.php', {
+        method: 'POST', // Change method to POST for adding a new item
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to save text');
+        }
+        return response.json(); // Parse the JSON response
+    })
+    .then(data => {
+        if (data.error) {
+            throw new Error(data.error); // Handle server-side errors
+        } else {
+            // Update the textbox with the new text
+            document.getElementById('input-box').value = newText;
+            console.log("Response from server:", data); 
+        }
+    })
+    .catch(error => console.error('Error saving text:', error));
+}
