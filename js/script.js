@@ -125,32 +125,29 @@ function deleteTask(taskId) {
     .catch(error => console.error('Error deleting task:', error));
 } 
 
-function saveText(taskId, newText) {
-    console.log("Saving text for taskId:", taskId);
-    console.log("New text:", newText);
+async function saveText(listId, newText) {
+    try {
+        const response = await fetch('php/list.php', {
+            method: 'PUT',
+            body: JSON.stringify({
+                list_id: listId,
+                item: {
+                    text: newText
+                }
+            }), 
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    const data = { text: newText, list_id: taskId }; // Send text and list_id for adding a new item
-    fetch('php/list.php', {
-        method: 'POST', // Change method to POST for adding a new item
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
+        console.log('Response received:', response);
+
         if (!response.ok) {
             throw new Error('Failed to save text');
         }
-        return response.json(); // Parse the JSON response
-    })
-    .then(data => {
-        if (data.error) {
-            throw new Error(data.error); // Handle server-side errors
-        } else {
-            // Update the textbox with the new text
-            document.getElementById('input-box').value = newText;
-            console.log("Response from server:", data); 
-        }
-    })
-    .catch(error => console.error('Error saving text:', error));
+
+        fetchTasks();
+    } catch (error) {
+        console.error('Error saving text:', error);
+    }
 }
