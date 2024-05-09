@@ -56,7 +56,7 @@ function fetchTasks() {
                 addButton.classList.add('add-text-button'); // Add a class for styling
                 addButton.type = 'button'; 
                 const pencilIcon = document.createElement('img');
-                pencilIcon.src = 'images/pencil-icon-vector-21894351.jpg'; // Provide the path to your pencil icon image
+                pencilIcon.src = 'images/images.png'; // Provide the path to your pencil icon image
                 pencilIcon.alt = 'Add Text';
                 addButton.appendChild(pencilIcon);
                 addButton.addEventListener('click', function(event) {
