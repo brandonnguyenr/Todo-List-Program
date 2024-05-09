@@ -53,16 +53,16 @@ function fetchTasks() {
 
                 // Create the pencil icon button
                 const addButton = document.createElement('button');
-                addButton.classList.add('add-text-button'); // Add a class for styling
+                addButton.classList.add('add-text-button'); 
                 addButton.type = 'button'; 
                 const pencilIcon = document.createElement('img');
-                pencilIcon.src = 'images/images.png'; // Provide the path to your pencil icon image
+                pencilIcon.src = 'images/images.png';
                 pencilIcon.alt = 'Add Text';
                 addButton.appendChild(pencilIcon);
                 addButton.addEventListener('click', function(event) {
                     if (event.target === pencilIcon) {
                         const taskId = taskContainer.dataset.taskId;
-                        const newText = prompt('Enter your text:');
+                        const newText = prompt('Enter item:');
             
                         if (!newText) {
                             return;
@@ -71,6 +71,19 @@ function fetchTasks() {
                     }
                 });
                 taskContainer.appendChild(addButton);
+
+                //View List Icon
+                const viewList = document.createElement('button');
+                viewList.classList.add('view-list-button');
+                viewList.type = "button";
+                const viewListIcon = document.createElement('img');
+                viewListIcon.src='images/booklet-flyer-icon-isolated-contour-symbol-illustration-vector.jpg';
+                viewListIcon.alt='View List';
+                viewList.appendChild(viewListIcon);
+                viewList.addEventListener("click",function(){
+                    showTaskItems(taskContainer.dataset.taskId);
+                    })
+                taskContainer.appendChild(viewList);
 
                 // Create the delete button
                 const deleteButton = document.createElement('button');
@@ -91,7 +104,6 @@ function fetchTasks() {
         })
         .catch(error => console.error('Error fetching data:', error));
 }
-
 
 document.getElementById('tasks-container').addEventListener('click', function(event) {
     if (event.target.classList.contains('delete-button')) {
@@ -151,3 +163,82 @@ async function saveText(listId, newText) {
         console.error('Error saving text:', error);
     }
 }
+
+function showTaskItems(listId) {
+    fetch(`php/list.php?list_id=${listId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch task items');
+            }
+            return response.json();
+        })
+        .then(data => {
+        
+            displayTaskItems(data);
+        })
+        .catch(error => console.error('Error fetching task items:', error));
+}
+
+function displayTaskItems(taskItems) {
+    const taskListContainer = document.getElementById('list-items-container');
+    taskListContainer.innerHTML = ''; 
+
+    const listNameElement = document.createElement('h2');
+    listNameElement.textContent = "Task Items"; // Change this to the actual name of the list
+    taskListContainer.appendChild(listNameElement);
+
+    const taskList = document.createElement('ul');
+    taskItems.forEach(item => {
+        const taskItemElement = document.createElement('li');
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = item.checked; // Set the checkbox state based on the 'checked' property of the item
+        
+        const taskText = document.createElement('span');
+        taskText.textContent = item.text;
+
+        // Style completed tasks with a line-through
+        if (item.checked) {
+            taskText.style.textDecoration = 'line-through';
+        }
+
+        // Add event listener to toggle the 'checked' property when the checkbox is clicked
+        checkbox.addEventListener('change', async () => {
+            try {
+                // Update the item's 'checked' property in the database
+                await fetch('php/list.php', {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        list_id: item.list_id,
+                        item: {
+                            id: item.item_id,
+                            checked: checkbox.checked
+                        }
+                    }), 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                // Update the display to reflect the changes
+                if (checkbox.checked) {
+                    taskText.style.textDecoration = 'line-through';
+                } else {
+                    taskText.style.textDecoration = 'none';
+                }
+            } catch (error) {
+                console.error('Error updating task:', error);
+            }
+        });
+
+        // Append checkbox and task text to the list item
+        taskItemElement.appendChild(checkbox);
+        taskItemElement.appendChild(taskText);
+
+        taskList.appendChild(taskItemElement);
+    });
+    taskListContainer.appendChild(taskList);
+}
+
+

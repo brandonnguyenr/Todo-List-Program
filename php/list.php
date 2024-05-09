@@ -135,6 +135,7 @@ function getLists(PDO $pdo)
 }
 
 // Returns array of ITEMS, each with the following structure: { id, text, checked, created }
+// Returns array of ITEMS, each with the following structure: { text }
 function getList(PDO $pdo, string $list_id)
 {
     $query = "CALL getList(:uid, :lid);";
@@ -145,8 +146,15 @@ function getList(PDO $pdo, string $list_id)
 
     $statement->execute($parameters);
 
-    return $statement->fetchAll();
+    // Fetch only the `text` property from each row
+    $taskItems = [];
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        $taskItems[] = ["text" => $row["text"]];
+    }
+
+    return $taskItems;
 }
+
 
 // check / uncheck item to that list
 function updateItem(PDO $pdo, $list_id, $item)

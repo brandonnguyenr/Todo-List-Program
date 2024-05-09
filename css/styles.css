@@ -125,10 +125,20 @@ h1 {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+p {
+    font-size: 15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 h2 {
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: white;
     margin: 0 auto; 
+}
+
+h3 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1em;
 }
 
 #date {
@@ -210,4 +220,31 @@ input {
 .add-text-button img {
     max-width: 16px;
     max-height: 16px; 
+}
+
+.view-list-button {
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer; 
+    margin-left: 10px;
+}
+
+.view-list-button img {
+    max-width: 25px;
+    max-height: 25px; 
+}
+
+.gray-text-box {
+    background-color: #ad9f9f5b; 
+    padding: 20px; 
+    border-radius: 10px; 
+    height: 350px;
+    width: 400px;
+    position: fixed;
+    top: 50%; 
+    right: 13.75%; 
+    transform: translate(0, -50%); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    z-index: 3;
 }
