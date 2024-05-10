@@ -1,7 +1,7 @@
 <?php
 // Project name: CPSC 431 Final Project - ToDo List 
 // File name: user.php
-// Date : May 24 2024
+// Date : April 24 2024
 // Author: Diego Barrales
 
 // Uncomment below if you need to have detailed error reporting
@@ -18,17 +18,22 @@ $handler = new Handler();
 $handler->process();
 
 // This function executes if you create a fetch() request to api/user.php and use "GET" as the method
-// function GET(Handler $handler)
-// {
-// }
-
+function GET(Handler $handler)
+{
+    if (isset($_SESSION['ID'])) {
+        $handler->response->json(["user_id" => $_SESSION['ID']]);
+    } else {
+        $handler->response->json(["error" => "User is Not Logged in"]);
+    }
+}
 // This function executes if you create a fetch() request to api/user.php and use "DELETE" as the method
 function DELETE(Handler $handler)
 {
 }
 
 // This function executes if you create a fetch() request to api/user.php and use "POST" as the method
-// Used to create a list
+// Used to create a user or get a user
+// if given a `create` parameter then tjhe post will create the user otherwise it will try to retrieve a user
 function POST(Handler $handler)
 {
     $pdo = $handler->db->PDO();
@@ -46,14 +51,12 @@ function POST(Handler $handler)
             $user_id = getUser($pdo, $username, $password);
         }
         $handler->response->handleResponse(['user_id' => $user_id]);
-
     } catch (UserException $error) {
         $handler->response->handleResponse(['error' => $error->getMessage()]);
     }
 }
 
 // This function executes if you create a fetch() request to api/user.php and use "PUT" as the method
-// Used to update list items
 function PUT(Handler $handler)
 {
 }

@@ -82,14 +82,16 @@ function POST(Handler $handler)
 
     $pdo = $handler->db->PDO();
 
-    $query = "INSERT INTO `lists`(`user_id`, `name`) VALUES (:uid, :list_name);";
+    $query = "CALL postList(:uid, :list_name);";
 
     $statement = $pdo->prepare($query);
 
     $parameters = [":uid" => $_SESSION['ID'], ":list_name" => $list_name];
 
     $statement->execute($parameters);
-    $handler->response->json(['ok' => $list_name . ' created successfully']);
+    $created_list = $statement->fetchAll()[0];
+    
+    $handler->response->json(['ok' => $list_name . ' created successfully', 'list' => $created_list]);
 }
 
 // This function executes if you create a fetch() request to api/list.php and use "PUT" as the method
@@ -109,7 +111,7 @@ function PUT(Handler $handler)
     // expect list_id seperately
     $list_id = $handler->request->post['list_id'] ?? '';
 
-    $db_item = [];
+    $ret_item = [];
     $pdo = $handler->db->PDO();
 
     if (isset($item['text'])) {
@@ -159,33 +161,39 @@ function getList(PDO $pdo, string $list_id)
 // check / uncheck item to that list
 function updateItem(PDO $pdo, $list_id, $item)
 {
-    $query = "UPDATE `list_items` SET `checked`=:checked WHERE `list_id`=:lid AND `item_id`=:iid;";
+    $query = "CALL updateItem(:lid, :iid, :checked);";
 
     $statement = $pdo->prepare($query);
 
     $parameters = [
-        ":checked" => $item['checked'],
         ":lid" => $list_id,
-        ":iid" => $item['id']
+        ":iid" => $item['id'],
+        ":checked" => $item['checked']
     ];
 
     $statement->execute($parameters);
+
+    $updated_item = $statement->fetchAll()[0];
+    return $updated_item;
 }
 
 function addItem(PDO $pdo, $list_id, $text)
 {
-    $query = "INSERT INTO `list_items`(`list_id`, `text`) VALUES (:lid, :text);";
+    $query = "CALL postItem(:lid, :text);";
 
     $statement = $pdo->prepare($query);
 
     $parameters = [":lid" => $list_id, ":text" => $text];
 
     $statement->execute($parameters);
+
+    $created_item = $statement->fetchAll()[0];
+    return $created_item;
 }
 
 function deleteItem(PDO $pdo, $list_id, $item_id)
 {
-    $query = "DELETE FROM `list_items` WHERE `list_id`=:lid AND `item_id`=:iid;";
+    $query = "CALL deleteItem(:lid, :iid);";
 
     $statement = $pdo->prepare($query);
 
@@ -199,7 +207,7 @@ function deleteItem(PDO $pdo, $list_id, $item_id)
 
 function deleteList(PDO $pdo, $list_id)
 {
-    $query = "DELETE FROM `lists` WHERE `user_id`=:uid AND `list_id`=:lid;";
+    $query = "CALL deleteList(:uid, :lid);";
 
     $parameters = [":uid" => $_SESSION['ID'], ":lid" => $list_id];
 
