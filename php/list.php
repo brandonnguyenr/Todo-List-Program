@@ -192,6 +192,9 @@ function deleteItem(PDO $pdo, $list_id, $item_id)
     $parameters = [":lid" => $list_id, ":iid" => $item_id];
 
     $statement->execute($parameters);
+
+    $deletedRows = $statement->rowCount();
+    return $deletedRows > 0; 
 }
 
 function deleteList(PDO $pdo, $list_id)

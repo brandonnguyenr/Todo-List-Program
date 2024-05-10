@@ -158,6 +158,9 @@ async function saveText(listId, newText) {
             throw new Error('Failed to save text');
         }
 
+        const confirmationMessage = 'Item Added!';
+        alert(confirmationMessage);
+ 
         fetchTasks();
     } catch (error) {
         console.error('Error saving text:', error);
@@ -180,33 +183,38 @@ function showTaskItems(listId) {
 }
 
 function displayTaskItems(taskItems) {
+    console.log(typeof taskItemElement);
     const taskListContainer = document.getElementById('list-items-container');
     taskListContainer.innerHTML = ''; 
 
     const listNameElement = document.createElement('h2');
-    listNameElement.textContent = "Task Items"; // Change this to the actual name of the list
+    listNameElement.textContent = "Task Items"; 
     taskListContainer.appendChild(listNameElement);
 
     const taskList = document.createElement('ul');
     taskItems.forEach(item => {
         const taskItemElement = document.createElement('li');
+        taskItemElement.classList.add('task-item');
+
+        const checkboxContainer = document.createElement('label');
+        checkboxContainer.classList.add('checkbox-container');
         
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.checked = item.checked; // Set the checkbox state based on the 'checked' property of the item
+        checkbox.checked = item.checked; 
         
+        const checkboxCircle = document.createElement('span');
+        checkboxCircle.classList.add('checkbox-circle');
+
         const taskText = document.createElement('span');
         taskText.textContent = item.text;
 
-        // Style completed tasks with a line-through
         if (item.checked) {
-            taskText.style.textDecoration = 'line-through';
+            taskText.classList.add('completed-task');
         }
 
-        // Add event listener to toggle the 'checked' property when the checkbox is clicked
         checkbox.addEventListener('change', async () => {
             try {
-                // Update the item's 'checked' property in the database
                 await fetch('php/list.php', {
                     method: 'PUT',
                     body: JSON.stringify({
@@ -221,24 +229,106 @@ function displayTaskItems(taskItems) {
                     }
                 });
                 
-                // Update the display to reflect the changes
                 if (checkbox.checked) {
-                    taskText.style.textDecoration = 'line-through';
+                    taskText.classList.add('completed-task');
                 } else {
-                    taskText.style.textDecoration = 'none';
+                    taskText.classList.remove('completed-task');
                 }
             } catch (error) {
                 console.error('Error updating task:', error);
             }
         });
 
-        // Append checkbox and task text to the list item
-        taskItemElement.appendChild(checkbox);
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(checkboxCircle);
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', async () => {
+            try {
+                const deleted = await deleteTaskItem(taskItems, item.list_id, item.item_id);
+                if (deleted) {
+                    taskItemElement.remove();
+                } else {
+                    console.error('Failed to delete task item');
+                }
+            } catch (error) {
+                console.error('Error deleting task item:', error);
+            }
+        });
+
+        taskItemElement.appendChild(checkboxContainer);
         taskItemElement.appendChild(taskText);
+        taskItemElement.appendChild(deleteButton);
 
         taskList.appendChild(taskItemElement);
     });
     taskListContainer.appendChild(taskList);
 }
+
+
+async function deleteTaskItem(taskItemElement, listId, itemId) {
+    try {
+      const response = await fetch('php/list.php', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          list_id: listId,
+          item_id: itemId
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to delete task item');
+      }
+  
+      const deleted = await response.json();
+      if (deleted) {
+        taskItemElement.remove();
+      } else {
+        console.error('Failed to delete task item on server');
+      }
+  
+      return deleted;
+    } catch (error) {
+      console.error('Error deleting task item:', error);
+      return false;
+    }
+  }
+  
+  
+  const taskListContainer = document.getElementById('list-items-container');
+  
+  taskListContainer.addEventListener('click', async (event) => {
+    if (event.target.classList.contains('delete')) {
+      const deleteButton = event.target;
+      const taskItemElement = deleteButton.closest('.task-item');
+  
+      console.log(taskItemElement); // Add this line to debug
+  
+      if (taskItemElement) {
+        const listId = taskItemElement.dataset.listId;
+        const itemId = taskItemElement.dataset.itemId;
+  
+        try {
+          const deleted = await deleteTaskItem(taskItemElement, listId, itemId);
+          if (deleted) {
+            console.log('Task item deleted successfully');
+          } else {
+            console.error('Failed to delete task item');
+          }
+        } catch (error) {
+          console.error('Error deleting task item:', error);
+        }
+      } else {
+        console.error('Task item element not found');
+      }
+    }
+  });
+  
+  
+  
 
 
