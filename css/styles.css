@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    font-family: 'Impact', fantasy; 
-    font-size: 20px; 
+    font-family: 'Impact', fantasy;
+    font-size: 20px;
     background-color: white;
     position: relative;
     overflow-x: hidden;
@@ -20,7 +20,7 @@ body {
     background-image: url('https://people.com/thmb/sHGUuDmqesw1pqEfjF6mc_9KPjw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(959x0:961x2)/zoom-12-ed9418b0fcd7455fb06479e563587a14.jpg');
     background-size: cover;
     background-position: center;
-    z-index: 1;
+    z-index: -5;
 }
 
 .login-section {
@@ -30,10 +30,10 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     z-index: 2;
     text-align: center;
-    width: 200px; 
-    height: 325px; 
+    width: 200px;
+    height: 325px;
     margin: auto;
-    position: absolute; 
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
@@ -56,29 +56,30 @@ body {
 
 .black-bar {
     background-color: rgba(0, 0, 0, 0.301);
-    height: 2px; 
-    margin-top: 10px; 
+    height: 2px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .btn {
     --bg-color: rgb(14, 119, 180);
     --bg-color-hover: rgba(14, 119, 180, 0.675);
-    color: white; 
-    padding: 10px 20px; 
-    font-size: 18px; 
-    border: none; 
-    border-radius: 5px; 
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
 
     background-color: var(--bg-color);
     transition: background-color 200ms ease;
 }
 
-.btn:hover, .btn:focus-within {
-    background-color: var(--bg-color-hover); 
+.btn:hover,
+.btn:focus-within {
+    background-color: var(--bg-color-hover);
 }
 
 .btn.btn-blue {
@@ -93,33 +94,33 @@ body {
 
 .white-box {
     background-color: rgb(255, 255, 255);
-    width: 1500px;
-    max-width: 1500px; 
-    height: 850px;
-    max-height: 1000px;
-    margin: 0 auto; 
-    padding: 20px; 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    z-index: 1; 
+    width: 90vw;
+    min-height: 90vh;
+    margin: auto auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto; /* Added grid-template-rows */
+    gap: 3rem;
+}
+
+.top {
+    grid-column: span 3;
+    text-align: center;
+}
+
+.middle {
+    grid-row: 2; /* Move elements in the middle row to the second row */
+    /* Add any additional styling as needed */
 }
 
 .center-blue-box {
     background-color: rgba(26, 49, 150, 0.952);
-    width: 500px;
-    max-width: 1500px; 
-    height: 850px;
-    max-height: 1000px;
-    margin: 0 auto; 
-    padding: 20px; 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    z-index: 2; 
+    min-width: fit-content;
+    padding: 1rem;
+    border-radius: 10px;
 }
+
 h1 {
     font-size: 1em;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -133,7 +134,7 @@ p {
 h2 {
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: white;
-    margin: 0 auto; 
+    margin: 0 auto;
 }
 
 h3 {
@@ -165,10 +166,9 @@ input {
     font-weight: 14px;
 }
 
-.btn.btn-todo{
+.btn.btn-todo {
     border: none;
     outline: none;
-    padding: 13px 50px;
     --bg-color: rgba(255, 123, 0, 0.863);
     --bg-color-hover: rgba(255, 95, 3, 0.842);
     color: #fff;
@@ -176,77 +176,78 @@ input {
     cursor: pointer;
     border-radius: 40px;
     width: 30%;
-    padding-left: 56px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}   
+}
 
 .task-container {
-    background-color: white; 
-    padding: 10px; 
-    margin-bottom: 10px; 
+    background-color: white;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 15px;
 }
 
 .task-container {
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .delete-button {
     background: none;
-    border: none; 
-    padding: 0; 
-    cursor: pointer; 
+    border: none;
+    padding: 0;
+    cursor: pointer;
     margin-left: 10px;
 }
 
 .delete-button img {
-    max-width: 20px; 
-    max-height: 20px; 
+    max-width: 20px;
+    max-height: 20px;
 }
 
 .add-text-button {
-    background: none; 
-    border: none; 
-    padding: 0; 
-    cursor: pointer; 
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     margin-left: auto;
 }
 
 .add-text-button img {
     max-width: 16px;
-    max-height: 16px; 
+    max-height: 16px;
 }
 
 .view-list-button {
-    background: none; 
-    border: none; 
-    padding: 0; 
-    cursor: pointer; 
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     margin-left: 10px;
 }
 
 .view-list-button img {
     max-width: 25px;
-    max-height: 25px; 
+    max-height: 25px;
 }
 
 .gray-text-box {
     background-color: #ad9f9f5b;
-    padding: 20px;
     border-radius: 10px;
-    height: 350px;
-    width: 400px;
-    position: fixed;
-    top: 50vh;
-    right: 13.75vw;
-    transform: translate(0, -50%);
+    padding: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 3;
+}
+
+@media only screen and (max-width: 60em) {
+    .white-box {
+        grid-template-columns: unset;
+    }
+    .top {
+        grid-column: unset;
+    }
 }
 
 ul {

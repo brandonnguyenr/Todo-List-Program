@@ -82,7 +82,8 @@ function POST(Handler $handler)
 
     $pdo = $handler->db->PDO();
 
-    $query = "CALL postList(:uid, :list_name);";
+    $query = "INSERT INTO `lists`(`user_id`, `name`) VALUES (:uid, :list_name);";
+    //$query = "CALL postList(:uid, :list_name);";
 
     $statement = $pdo->prepare($query);
 
@@ -108,11 +109,12 @@ function PUT(Handler $handler)
         $handler->response->json(['error' => 'item was not provided']);
     }
 
-    // expect list_id seperately
+    // expect list_id separately
     $list_id = $handler->request->post['list_id'] ?? '';
 
-    $ret_item = [];
     $pdo = $handler->db->PDO();
+
+    $ret_item = [];
 
     if (isset($item['text'])) {
         $ret_item = addItem($pdo, $list_id, $item['text']);
@@ -120,6 +122,7 @@ function PUT(Handler $handler)
         $ret_item = updateItem($pdo, $list_id, $item);
     }
 
+    // Return the updated or added item
     $handler->response->json(['item' => $ret_item]);
 }
 
@@ -161,7 +164,8 @@ function getList(PDO $pdo, string $list_id)
 // check / uncheck item to that list
 function updateItem(PDO $pdo, $list_id, $item)
 {
-    $query = "CALL updateItem(:lid, :iid, :checked);";
+    $query = "UPDATE `list_items` SET `checked`=:checked WHERE `list_id`=:lid AND `item_id`=:iid;";
+    // $query = "CALL updateItem(:lid, :iid, :checked);";
 
     $statement = $pdo->prepare($query);
 
@@ -179,7 +183,8 @@ function updateItem(PDO $pdo, $list_id, $item)
 
 function addItem(PDO $pdo, $list_id, $text)
 {
-    $query = "CALL postItem(:lid, :text);";
+    $query = "INSERT INTO `list_items`(`list_id`, `text`) VALUES (:lid, :text);";
+    // $query = "CALL postItem(:lid, :text);";
 
     $statement = $pdo->prepare($query);
 
@@ -200,9 +205,6 @@ function deleteItem(PDO $pdo, $list_id, $item_id)
     $parameters = [":lid" => $list_id, ":iid" => $item_id];
 
     $statement->execute($parameters);
-
-    $deletedRows = $statement->rowCount();
-    return $deletedRows > 0; 
 }
 
 function deleteList(PDO $pdo, $list_id)

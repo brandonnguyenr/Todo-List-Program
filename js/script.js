@@ -242,24 +242,9 @@ function displayTaskItems(taskItems) {
         checkboxContainer.appendChild(checkbox);
         checkboxContainer.appendChild(checkboxCircle);
         
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', async () => {
-            try {
-                const deleted = await deleteTaskItem(taskItems, item.list_id, item.item_id);
-                if (deleted) {
-                    taskItemElement.remove();
-                } else {
-                    console.error('Failed to delete task item');
-                }
-            } catch (error) {
-                console.error('Error deleting task item:', error);
-            }
-        });
-
         taskItemElement.appendChild(checkboxContainer);
         taskItemElement.appendChild(taskText);
-        taskItemElement.appendChild(deleteButton);
+
 
         taskList.appendChild(taskItemElement);
     });
@@ -267,67 +252,7 @@ function displayTaskItems(taskItems) {
 }
 
 
-async function deleteTaskItem(taskItemElement, listId, itemId) {
-    try {
-      const response = await fetch('php/list.php', {
-        method: 'DELETE',
-        body: JSON.stringify({
-          list_id: listId,
-          item_id: itemId
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to delete task item');
-      }
-  
-      const deleted = await response.json();
-      if (deleted) {
-        taskItemElement.remove();
-      } else {
-        console.error('Failed to delete task item on server');
-      }
-  
-      return deleted;
-    } catch (error) {
-      console.error('Error deleting task item:', error);
-      return false;
-    }
-  }
-  
-  
-  const taskListContainer = document.getElementById('list-items-container');
-  
-  taskListContainer.addEventListener('click', async (event) => {
-    if (event.target.classList.contains('delete')) {
-      const deleteButton = event.target;
-      const taskItemElement = deleteButton.closest('.task-item');
-  
-      console.log(taskItemElement); // Add this line to debug
-  
-      if (taskItemElement) {
-        const listId = taskItemElement.dataset.listId;
-        const itemId = taskItemElement.dataset.itemId;
-  
-        try {
-          const deleted = await deleteTaskItem(taskItemElement, listId, itemId);
-          if (deleted) {
-            console.log('Task item deleted successfully');
-          } else {
-            console.error('Failed to delete task item');
-          }
-        } catch (error) {
-          console.error('Error deleting task item:', error);
-        }
-      } else {
-        console.error('Task item element not found');
-      }
-    }
-  });
-  
+async function deleteTaskItem(taskItemElement, listId, itemId) {}
   
   
 
