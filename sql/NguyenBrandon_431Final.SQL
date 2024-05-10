@@ -24,6 +24,32 @@ INSERT INTO users (username, password) VALUES (_username, _password);
 CALL `getUser`(_username);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE IF NOT EXISTS `deleteItem`(IN `_list_id` INT(11), IN `_item_id` INT(11))
+    MODIFIES SQL DATA
+DELETE FROM `list_items` WHERE `list_id`=_list_id AND `item_id`=_item_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE IF NOT EXISTS `deleteList`(IN `_user_id` INT(11), IN `_list_id` INT(11))
+    MODIFIES SQL DATA
+DELETE FROM `lists` WHERE `user_id`=_user_id AND `list_id`=_list_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE IF NOT EXISTS `postItem`(IN `_list_id` INT(11), IN `_text` VARCHAR(255))
+BEGIN
+INSERT INTO `list_items`(`list_id`, `text`) VALUES (_list_id, _text);
+SELECT * FROM `list_items` WHERE list_items.list_id=_list_id ORDER BY list_items.item_id DESC LIMIT 1;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE IF NOT EXISTS `postList`(IN `_user_id` INT(11), IN `_name` VARCHAR(255))
+BEGIN
+INSERT INTO `lists`(`user_id`, `name`) VALUES (_user_id, _name);
+SELECT * FROM `lists` WHERE lists.user_id=_user_id ORDER BY lists.list_id DESC LIMIT 1;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE IF NOT EXISTS `updateItem`(IN `_list_id` INT(11), IN `_item_id` INT(11), IN `_checked` TINYINT(1))
+BEGIN
+UPDATE `list_items` SET `checked`=_checked WHERE `list_id`=_list_id AND `item_id`=_item_id;
+SELECT * FROM `list_items` WHERE list_items.list_id=_list_id AND list_items.item_id=_item_id;
+END$$
+
 DELIMITER ;
 
 -- Create a table for storing usernames and passwords
