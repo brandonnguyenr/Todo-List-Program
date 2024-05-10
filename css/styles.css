@@ -191,7 +191,7 @@ input {
 }
 
 #tasks-container {
-    max-height: 250px;
+    min-height: 250px;
     padding: 0.5rem;
     overflow-y: auto;
 }
