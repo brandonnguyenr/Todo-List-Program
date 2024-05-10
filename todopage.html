@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,37 +8,40 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/todo.js" type="module"></script>
 </head>
+
 <body>
     <div class="background-image"></div>
 
     <div class="white-box">
-        <h1>Welcome to your Task Manager!</h1> 
-        <p>Instructions can be found on the right side of the screen!</p>
-        <div id="list-items-container" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"></div>
-
-    </div>
-    
-    <div class="center-blue-box">
-        <form id="todo-form">
-            <h2>My Day</h2>
-            <p id="date"></p>
-            <div class="row">
-                <input type="text" id="input-box" placeholder="Add List" maxlength="50">
-                <button type="submit" name = "submit" class="btn btn-todo" id="button-todo">Add</button>
-            </div>
-        </form>  
-        <div id="tasks-container"></div>
-    </div>
-
-    <div class="gray-text-box">
-        <h3>Instructions:</h3>
-        <p> First <b>add</b> a list by typing the name of the list into the text box. Then click add. </p>
-        <p> To <b>add items</b> to the list click the (+) icon then enter the item you want to add.</p>
-        <p> To <b>view</b> the list click on the paper icon and the list will be presented on the left side of the screen.</p>
-        <p> To <b>delete</b> the list, simply click on the trash icon and confirm the deletion.</p>
+        <div class="top">
+            <h1>Welcome to your Task Manager!</h1>
+            <p>Instructions can be found on the right side of the screen!</p>
+        </div>
+        <div id="list-items-container" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+        </div>
+        <div class="center-blue-box">
+            <form id="todo-form">
+                <h2>My Day</h2>
+                <p id="date"></p>
+                <div class="row">
+                    <input type="text" id="input-box" placeholder="Add List" maxlength="50">
+                    <button type="submit" name="submit" class="btn btn-todo" id="button-todo">Add</button>
+                </div>
+            </form>
+            <div id="tasks-container"></div>
+        </div>
+        <div class="gray-text-box">
+            <h3>Instructions:</h3>
+            <p> First <b>add</b> a list by typing the name of the list into the text box. Then click add. </p>
+            <p> To <b>add items</b> to the list click the (+) icon then enter the item you want to add.</p>
+            <p> To <b>view</b> the list click on the paper icon and the list will be presented on the left side of
+                the screen.</p>
+            <p> To <b>delete</b> the list, simply click on the trash icon and confirm the deletion.</p>
+        </div>
     </div>
 
     <script src="js/script.js"></script>
 
 </body>
+
 </html>
