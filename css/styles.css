@@ -101,6 +101,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
+    align-content: center;
 }
 
 .top {
@@ -189,6 +190,18 @@ input {
     justify-content: space-between;
 }
 
+#tasks-container {
+    max-height: 250px;
+    padding: 0.5rem;
+    overflow-y: auto;
+}
+
+#list-items-container > ul {
+    max-height: 350px;
+    padding: 0.5rem;
+    overflow-y: auto;
+}
+
 .delete-button {
     background: none;
     border: none;
@@ -239,6 +252,7 @@ input {
     .white-box {
         grid-template-columns: unset;
     }
+
     .top {
         grid-column: unset;
     }
