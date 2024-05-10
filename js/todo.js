@@ -1,4 +1,4 @@
-import { userIsLoggedIn } from "./helpers/check_user";
+import { userIsLoggedIn } from "./helpers/check_user.js";
 
 
 document.addEventListener('load', () => {
