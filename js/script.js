@@ -85,6 +85,22 @@ function fetchTasks() {
                     })
                 taskContainer.appendChild(viewList);
 
+                // create the pencil Button
+                const pencilBtn = document.createElement('button');
+                pencilBtn.classList.add('delete-button');
+                pencilBtn.type = 'button';
+                const pencilIcon = document.createElement('img');
+                pencilIcon.src = 'images/pngtree-pencil-icon-png-image_1753753.jpg';
+                pencilIcon.alt = 'edit list title';
+                pencilBtn.appendChild(pencilIcon);
+                pencilBtn.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const listID = taskContainer.dataset.taskId;
+                    const newName = prompt(`Enter new name for ${item.name}:`);
+                    updateList(listID, newName);
+                });
+                taskContainer.appendChild(pencilBtn);
+
                 // Create the delete button
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-button');
@@ -252,8 +268,31 @@ function displayTaskItems(taskItems) {
 }
 
 
-async function deleteTaskItem(taskItemElement, listId, itemId) {}
-  
-  
+async function deleteTaskItem(taskItemElement, listId, itemId) { }
 
+async function updateList(listID, newName) {
+    console.log(newName);
+    if (newName === null) {
+        return;
+    }
 
+    const request = await fetch('php/list.php', {
+        method: 'PUT',
+        body: JSON.stringify({
+            list_id: listID,
+            list_name: newName
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const response = await request.json();
+
+    if (response.ok) {
+        fetchTasks();
+    } else {
+        alert('Something went wrong could not update list name!');
+        console.log(response);
+    }
+}

@@ -91,7 +91,7 @@ function POST(Handler $handler)
 
     $statement->execute($parameters);
     $created_list = $statement->fetchAll()[0];
-    
+
     $handler->response->json(['ok' => $list_name . ' created successfully', 'list' => $created_list]);
 }
 
@@ -105,15 +105,21 @@ function PUT(Handler $handler)
 {
     $item = $handler->request->post['item'] ?? null;
 
-    if (!isset($item)) {
-        $handler->response->json(['error' => 'item was not provided']);
-    }
 
     // expect list_id separately
     $list_id = $handler->request->post['list_id'] ?? '';
 
     $pdo = $handler->db->PDO();
 
+    if (!isset($item)) {
+        $new_name = $handler->request->post['list_name'] ?? '';
+
+        updateList($pdo, $list_id, $new_name);
+
+        $handler->response->json(['ok' => 'list updated sucessfully']);
+    }
+    // if item was not provided then it is not an error, you just want to update the list name
+    // $handler->response->json(['error' => 'item was not provided']);
     $ret_item = [];
 
     if (isset($item['text'])) {
@@ -121,7 +127,6 @@ function PUT(Handler $handler)
     } else {
         $ret_item = updateItem($pdo, $list_id, $item);
     }
-
     // Return the updated or added item
     $handler->response->json(['item' => $ret_item]);
 }
@@ -164,8 +169,8 @@ function getList(PDO $pdo, string $list_id)
 // check / uncheck item to that list
 function updateItem(PDO $pdo, $list_id, $item)
 {
-    $query = "UPDATE `list_items` SET `checked`=:checked WHERE `list_id`=:lid AND `item_id`=:iid;";
-    // $query = "CALL updateItem(:lid, :iid, :checked);";
+    // $query = "UPDATE `list_items` SET `checked`=:checked WHERE `list_id`=:lid AND `item_id`=:iid;";
+    $query = "CALL updateItem(:lid, :iid, :checked);";
 
     $statement = $pdo->prepare($query);
 
@@ -183,8 +188,8 @@ function updateItem(PDO $pdo, $list_id, $item)
 
 function addItem(PDO $pdo, $list_id, $text)
 {
-    $query = "INSERT INTO `list_items`(`list_id`, `text`) VALUES (:lid, :text);";
-    // $query = "CALL postItem(:lid, :text);";
+    // $query = "INSERT INTO `list_items`(`list_id`, `text`) VALUES (:lid, :text);";
+    $query = "CALL postItem(:lid, :text);";
 
     $statement = $pdo->prepare($query);
 
@@ -212,6 +217,17 @@ function deleteList(PDO $pdo, $list_id)
     $query = "CALL deleteList(:uid, :lid);";
 
     $parameters = [":uid" => $_SESSION['ID'], ":lid" => $list_id];
+
+    $statement = $pdo->prepare($query);
+
+    $statement->execute($parameters);
+}
+
+function updateList(PDO $pdo, $list_id, $new_name)
+{
+    $query = "UPDATE `lists` SET `name`=:name WHERE lists.list_id=:lid;";
+
+    $parameters = [":name" => $new_name, ":lid" => $list_id];
 
     $statement = $pdo->prepare($query);
 
