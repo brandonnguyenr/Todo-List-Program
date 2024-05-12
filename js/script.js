@@ -55,10 +55,10 @@ function fetchTasks() {
                 const addButton = document.createElement('button');
                 addButton.classList.add('add-text-button'); 
                 addButton.type = 'button'; 
-                const pencilIcon = document.createElement('img');
-                pencilIcon.src = 'images/images.png';
-                pencilIcon.alt = 'Add Text';
-                addButton.appendChild(pencilIcon);
+                const addIcon = document.createElement('img');
+                addIcon.src = 'images/images.png';
+                addIcon.alt = 'Add Text';
+                addButton.appendChild(addIcon);
                 addButton.addEventListener('click', function(event) {
                     if (event.target === pencilIcon) {
                         const taskId = taskContainer.dataset.taskId;
