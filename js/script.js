@@ -51,7 +51,7 @@ function fetchTasks() {
                 taskItem.textContent = item.name; 
                 taskContainer.appendChild(taskItem); 
 
-                // Create the pencil icon button
+                // Create the add icon button
                 const addButton = document.createElement('button');
                 addButton.classList.add('add-text-button'); 
                 addButton.type = 'button'; 
@@ -60,7 +60,7 @@ function fetchTasks() {
                 addIcon.alt = 'Add Text';
                 addButton.appendChild(addIcon);
                 addButton.addEventListener('click', function(event) {
-                    if (event.target === pencilIcon) {
+                    if (event.target === addIcon) {
                         const taskId = taskContainer.dataset.taskId;
                         const newText = prompt('Enter item:');
             
@@ -85,7 +85,7 @@ function fetchTasks() {
                     })
                 taskContainer.appendChild(viewList);
 
-                // create the pencil Button
+                // create the pencil icon Button
                 const pencilBtn = document.createElement('button');
                 pencilBtn.classList.add('delete-button');
                 pencilBtn.type = 'button';
