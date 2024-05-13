@@ -288,8 +288,11 @@ function displayTaskItems(listID, taskItems) {
 
 
 async function deleteTaskItem(listID, itemID) {
-    // TODO: debate if we need a confirmation thing like on line 133
+    const confirmDelete = confirm("Are you sure you want to delete this item?");
 
+    if (!confirmDelete) {
+        return;
+    }
     const requestURL = `php/list.php?list_id=${listID}&item_id=${itemID}`;
 
     const request = await fetch(requestURL, {
