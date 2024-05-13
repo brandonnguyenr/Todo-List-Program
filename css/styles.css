@@ -166,10 +166,12 @@ h3 {
 }
 
 .btn.btn-sort {
-    width: 120px;
+    /* width: 120px; */
     height: 35px;
     font-size: 12px;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
+    
+    margin-inline: 0.25rem;
 }
 
 input {
@@ -313,4 +315,22 @@ ul {
 
 .completed-task {
     text-decoration: line-through;
+}
+
+.asc {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.flipped {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.btn-sort span {
+    margin-inline-start: 1rem;
 }

@@ -46,9 +46,19 @@ function fetchTasks() {
 
             const sortBy = todoList.dataset.sortBy;
             if (sortBy === 'name') {
-                data.sort((a, b) => a.name.localeCompare(b.name));
+                const order = todoList.dataset.nameOrder;
+                if (order === 'asc') {
+                    data.sort((a, b) => a.name.localeCompare(b.name));
+                } else {
+                    data.sort((a, b) => b.name.localeCompare(a.name));
+                }
             } else if (sortBy === 'date') {
-                data.sort((a, b) => new Date(a.created) - new Date(b.created));
+                const order = todoList.dataset.dateOrder;
+                if (order === 'asc') {
+                    data.sort((a, b) => new Date(a.created) - new Date(b.created));
+                } else {
+                    data.sort((a, b) => new Date(b.created) - new Date(a.created));
+                }
             }
 
             data.forEach(item => {
@@ -129,15 +139,31 @@ function fetchTasks() {
         .catch(error => console.error('Error fetching data:', error));
 }
 
-document.getElementById('sortByNameBtn').addEventListener('click', function() {
+document.getElementById('sortByNameBtn').addEventListener('click', function () {
+    const icon = document.querySelector('#sortByNameBtn > span');
+    icon.classList.toggle('flipped');
+
     const todoList = document.getElementById('tasks-container');
     todoList.dataset.sortBy = 'name';
+    if (todoList.dataset.nameOrder === 'asc') {
+        todoList.dataset.nameOrder = 'desc';
+    } else {
+        todoList.dataset.nameOrder = 'asc';
+    }
     fetchTasks();
 });
 
-document.getElementById('sortByDateBtn').addEventListener('click', function() {
+document.getElementById('sortByDateBtn').addEventListener('click', function () {
+    const icon = document.querySelector('#sortByDateBtn > span');
+    icon.classList.toggle('flipped');
+
     const todoList = document.getElementById('tasks-container');
     todoList.dataset.sortBy = 'date';
+    if (todoList.dataset.dateOrder === 'asc') {
+        todoList.dataset.dateOrder = 'desc';
+    } else {
+        todoList.dataset.dateOrder = 'asc';
+    }
     fetchTasks();
 });
 
