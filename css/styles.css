@@ -95,7 +95,8 @@ body {
 .white-box {
     background-color: rgb(255, 255, 255);
     width: 90svw;
-    height: 90vh;
+    height: 95svh;
+    overflow-y: hidden;
     margin: auto auto;
     padding: 1rem;
     display: grid;
