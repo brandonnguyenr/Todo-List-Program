@@ -63,7 +63,8 @@ if (isset($_POST['submit'])) {
             <input type="password" name="confirm_password" id="confirm-password-field" class="login-form-field" placeholder="Confirm Password" required>
             <br>
             <button class="btn btn-red" type="submit" name="submit">Register</button>
-        </form>
+            <button onclick="window.location.href='index.php'" class="btn btn-blue" type="button">Back to Home</button>
+
     </div>
 </body>
 
