@@ -248,7 +248,9 @@ function displayTaskItems(listID, taskItems) {
     taskListContainer.innerHTML = ''; 
 
     const listNameElement = document.createElement('h2');
-    listNameElement.textContent = "Task Items";
+    const listContainer = document.querySelector(`.task-container[data-task-id="${listID}"] > span`);
+
+    listNameElement.textContent = listContainer.innerHTML;
     listNameElement.style.color = "black";
     taskListContainer.appendChild(listNameElement);
 
