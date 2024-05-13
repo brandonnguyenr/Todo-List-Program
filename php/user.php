@@ -20,6 +20,7 @@ $handler->process();
 // This function executes if you create a fetch() request to api/user.php and use "GET" as the method
 function GET(Handler $handler)
 {
+    session_start();
     if (isset($_SESSION['ID'])) {
         $handler->response->json(["user_id" => $_SESSION['ID']]);
     } else {
