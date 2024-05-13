@@ -41,6 +41,8 @@ function fetchTasks() {
             return response.json();
         })
         .then(data => {
+
+            data.sort((a, b) => a.name.localeCompare(b.name));
             const todoList = document.getElementById('tasks-container');
             todoList.innerHTML = ''; 
             data.forEach(item => {
