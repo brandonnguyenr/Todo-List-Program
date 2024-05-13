@@ -35,10 +35,8 @@ function GET(Handler $handler)
     $list = [];
 
     if (empty($list_id)) {
-        // $list = getLists($pdo, $user_id);
         $list = getLists($pdo);
     } else {
-        // $list = getList($pdo, $user_id, $list_id);
         $list = getList($pdo, $list_id);
     }
     $handler->response->json($list);
@@ -145,7 +143,6 @@ function getLists(PDO $pdo)
 }
 
 // Returns array of ITEMS, each with the following structure: { id, text, checked, created }
-// Returns array of ITEMS, each with the following structure: { text }
 function getList(PDO $pdo, string $list_id)
 {
     $query = "CALL getList(:uid, :lid);";
@@ -156,13 +153,7 @@ function getList(PDO $pdo, string $list_id)
 
     $statement->execute($parameters);
 
-    // Fetch only the `text` property from each row
-    $taskItems = [];
-    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $taskItems[] = ["text" => $row["text"]];
-    }
-
-    return $taskItems;
+    return $statement->fetchAll();
 }
 
 

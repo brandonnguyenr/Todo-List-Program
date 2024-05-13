@@ -192,24 +192,26 @@ function showTaskItems(listId) {
             return response.json();
         })
         .then(data => {
-        
-            displayTaskItems(data);
+            displayTaskItems(listId, data);
         })
         .catch(error => console.error('Error fetching task items:', error));
 }
 
-function displayTaskItems(taskItems) {
-    console.log(typeof taskItemElement);
+function displayTaskItems(listID, taskItems) {
     const taskListContainer = document.getElementById('list-items-container');
     taskListContainer.innerHTML = ''; 
 
     const listNameElement = document.createElement('h2');
-    listNameElement.textContent = "Task Items"; 
+    listNameElement.textContent = "Task Items";
+    listNameElement.style.color = "black";
     taskListContainer.appendChild(listNameElement);
 
     const taskList = document.createElement('ul');
     taskItems.forEach(item => {
         const taskItemElement = document.createElement('li');
+
+        taskItemElement.dataset.item = item.id;
+
         taskItemElement.classList.add('task-item');
 
         const checkboxContainer = document.createElement('label');
@@ -217,15 +219,17 @@ function displayTaskItems(taskItems) {
         
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.checked = item.checked; 
         
+        // convert 0 or 1 from database to true or false
+        checkbox.checked = !!parseInt(item.checked);
+
         const checkboxCircle = document.createElement('span');
         checkboxCircle.classList.add('checkbox-circle');
 
         const taskText = document.createElement('span');
         taskText.textContent = item.text;
 
-        if (item.checked) {
+        if (checkbox.checked) {
             taskText.classList.add('completed-task');
         }
 
@@ -234,9 +238,9 @@ function displayTaskItems(taskItems) {
                 await fetch('php/list.php', {
                     method: 'PUT',
                     body: JSON.stringify({
-                        list_id: item.list_id,
+                        list_id: listID,
                         item: {
-                            id: item.item_id,
+                            id: item.id,
                             checked: checkbox.checked
                         }
                     }), 
@@ -261,6 +265,21 @@ function displayTaskItems(taskItems) {
         taskItemElement.appendChild(checkboxContainer);
         taskItemElement.appendChild(taskText);
 
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.type = 'button';
+        const trashCanIcon = document.createElement('img');
+        trashCanIcon.src = 'images/trash-can-outline-icon-bin-vector-43707178.jpg';
+        trashCanIcon.alt = 'Delete';
+        deleteButton.appendChild(trashCanIcon);
+        deleteButton.addEventListener('click', function () {
+            // console.log('Item ID: ', item.id);
+            // console.log('List ID: ', listID);
+            deleteTaskItem(listID, item.id);
+        });
+
+        // append delete element to ITEM 
+        taskItemElement.appendChild(deleteButton);
 
         taskList.appendChild(taskItemElement);
     });
@@ -268,7 +287,24 @@ function displayTaskItems(taskItems) {
 }
 
 
-async function deleteTaskItem(taskItemElement, listId, itemId) { }
+async function deleteTaskItem(listID, itemID) {
+    // TODO: debate if we need a confirmation thing like on line 133
+
+    const requestURL = `php/list.php?list_id=${listID}&item_id=${itemID}`;
+
+    const request = await fetch(requestURL, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'webapplication/x-www-form-urlencoded',
+        }
+    });
+
+    const response = await request.json();
+    if(response.ok) {
+        const taskContainer = document.querySelector(`.task-item[data-item="${itemID}"]`);
+        taskContainer.remove();
+    }
+}
 
 async function updateList(listID, newName) {
     console.log(newName);
