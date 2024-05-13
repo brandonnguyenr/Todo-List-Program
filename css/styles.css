@@ -157,6 +157,21 @@ h3 {
     margin-bottom: 25px;
 }
 
+.row2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+.btn.btn-sort {
+    width: 120px;
+    height: 35px;
+    font-size: 12px;
+    padding: 10px 20px;
+}
+
 input {
     flex: 1;
     border: none;

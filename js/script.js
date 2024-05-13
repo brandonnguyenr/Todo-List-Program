@@ -41,10 +41,16 @@ function fetchTasks() {
             return response.json();
         })
         .then(data => {
-
-            data.sort((a, b) => a.name.localeCompare(b.name));
             const todoList = document.getElementById('tasks-container');
             todoList.innerHTML = ''; 
+
+            const sortBy = todoList.dataset.sortBy;
+            if (sortBy === 'name') {
+                data.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (sortBy === 'date') {
+                data.sort((a, b) => new Date(a.created) - new Date(b.created));
+            }
+
             data.forEach(item => {
                 const taskContainer = document.createElement('div'); 
                 taskContainer.classList.add('task-container'); 
@@ -122,6 +128,18 @@ function fetchTasks() {
         })
         .catch(error => console.error('Error fetching data:', error));
 }
+
+document.getElementById('sortByNameBtn').addEventListener('click', function() {
+    const todoList = document.getElementById('tasks-container');
+    todoList.dataset.sortBy = 'name';
+    fetchTasks();
+});
+
+document.getElementById('sortByDateBtn').addEventListener('click', function() {
+    const todoList = document.getElementById('tasks-container');
+    todoList.dataset.sortBy = 'date';
+    fetchTasks();
+});
 
 document.getElementById('tasks-container').addEventListener('click', function(event) {
     if (event.target.classList.contains('delete-button')) {

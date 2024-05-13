@@ -33,6 +33,14 @@
                     <input type="text" id="input-box" placeholder="Add List" maxlength="50">
                     <button type="submit" name="submit" class="btn btn-todo" id="button-todo">Add</button>
                 </div>
+
+                <div class="row2">
+                    <!-- Button to sort by name -->
+                    <button type="button" class="btn btn-sort" id="sortByNameBtn">Sort by Name</button>
+                    <!-- Button to sort by creation date -->
+                    <button type="button" class="btn btn-sort" id="sortByDateBtn">Sort by Date</button>
+                </div>
+
             </form>
             <div id="tasks-container"></div>
         </div>
@@ -47,7 +55,7 @@
             <p> To <b>delete</b> an item off the list, click on the trash icon and confirm the deletion</p>
             <p> To <b>rename</b> the list, click on the pencil icon and type in the new list name.</p>
             <p> Finally, <b>check off</b> any items that are complete.</p>
-            <p> If you have lots of lists: all the lists are <b>sorted</b> alphabetically!</p>
+            <p> If you have lots of lists: all the lists can <b>sorted</b> alphabetically or by creation date, oldest at the top.</p>
         </div>
     </div>
 
